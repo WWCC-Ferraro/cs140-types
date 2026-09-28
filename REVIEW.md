@@ -1,21 +1,18 @@
-# Review of `review/checkout.js`
+# Review of `review/split-bill.js`
 
 A person reads this, not the tests. Write it for the teammate who wrote the
-code: they should be able to act on each finding without asking you anything.
+script: they should be able to fix each problem from what you write.
 
-Copy the block below once for each problem you find.
+There are three problems. Copy the block below once for each one you find.
 
-## Finding 1
+## Problem 1
 
-**Lines:**
+**Line:**
 
-**What goes wrong:**
+**What goes wrong, and why:**
 
-**An input that shows it** — the call, what it returns, and what it should return:
-
-```js
-
-```
+**Values that show it** — what you set at the top, what it printed, and what
+it should have printed:
 
 **The fix:**
 

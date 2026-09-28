@@ -2,7 +2,7 @@
   "name": "cs140-types",
   "private": true,
   "type": "module",
-  "description": "Search filters from a query string: convert on purpose, compare correctly, tell missing from zero from cleared.",
+  "description": "Values, one at a time: name a type, convert on purpose, compare with ===, and keep nothing apart from zero.",
   "scripts": {
     "test": "node --test"
   },

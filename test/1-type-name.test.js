@@ -2,45 +2,36 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { inspect } from 'node:util';
-import { typeName } from '../src/read.js';
+import { typeName } from '../src/values.js';
 
-const show = (v) => inspect(v);   // prints "5", 5, null and undefined so you can tell them apart
+const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tell text from a number
 
-function check(value, expected, where) {
+function check(value, expected, hint) {
   const got = typeName(value);
   assert.equal(got, expected,
-    `typeName(${show(value)}) should be ${show(expected)}, got ${show(got)}. ${where}`);
+    `typeName(${show(value)}) should be ${show(expected)}, but it gave ${show(got)}. ${hint}`);
 }
 
-test('names text, numbers, booleans and undefined the way typeof does', () => {
-  const where = 'For these four, typeof already asks the value the right question.';
-  check('hello', 'string', where);
-  check('5', 'string', where + ' "5" is text that looks like a number; the value is still text.');
-  check(5, 'number', where);
-  check(true, 'boolean', where);
-  check(undefined, 'undefined', where);
+test('names strings, numbers, booleans and undefined the way typeof does', () => {
+  const hint = 'typeof already gives the right answer for these. See "Where the type actually lives".';
+  check('hello', 'string', hint);
+  check(5, 'number', hint);
+  check(true, 'boolean', hint);
+  check(undefined, 'undefined', hint);
+});
+
+test('"5" is a string, even though it looks like a number', () => {
+  check('5', 'string',
+    'The quotes make it text. The type belongs to the value, not to what it looks like.');
 });
 
 test('names null as "null", not "object"', () => {
   check(null, 'null',
-    'typeof gets this one wrong — "Where the type actually lives" calls it a known bug. ' +
-    'A message that says "got object" for a cleared field would send the reader looking for an object. ' +
-    'This value needs its own check.');
+    'typeof null says "object" — a mistake in the language that was never fixed. ' +
+    'Check for null with === before you use typeof.');
 });
 
-test('names an array as "array", not "object"', () => {
-  check(['true', 'false'], 'array',
-    'typeof answers "object" for every array, because it reports a coarse category. ' +
-    'The same lesson names the check that asks "is this an array?"');
-  check([], 'array', 'An empty array is still an array.');
-});
-
-test('names a plain object as "object"', () => {
-  check({ min: 5 }, 'object', 'Only null and arrays are corrected; a plain object stays "object".');
-});
-
-test('names NaN as "number" — it is the number type\'s own "not a number"', () => {
+test('NaN is a number', () => {
   check(NaN, 'number',
-    'typeName reports the type, not whether the value is usable. NaN is a number-typed value; ' +
-    'rejecting it is readNumber\'s job, not this function\'s.');
+    'NaN means "not a number", but its type is number. typeof says so; do not correct it.');
 });

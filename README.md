@@ -1,34 +1,28 @@
-# Search filters from a query string
+# Values, one at a time
 
-A shop's search page lets a shopper narrow the product list three ways: a
-lowest price, a highest price, and "in stock only". The filters arrive from two
-places:
+Eight small functions, each about one thing JavaScript does with a value: what
+type it is, how to turn text into a number on purpose, which comparison to use,
+and how to tell "nothing" apart from zero. Then a short review of a teammate's
+script, and two short written answers.
 
-- **The page address**, such as `?minPrice=5&maxPrice=&inStock=false`. Every
-  value here is text.
-- **The shopper's saved preferences**, stored as JSON. Here the values are
-  numbers, booleans and `null`.
+Everything here uses numbers, strings, booleans, `null` and `undefined` — the
+values from the *Values, types and operators* module. Plan on about an hour and
+a half. If this is your first time programming, it may take a little longer,
+and that is fine.
 
-You will write the code that reads both, decides what each value means,
-combines them, and uses the result to pick products.
+## What each part leans on
 
-JavaScript will not stop a wrong value anywhere on the way. `"5"` and `5` both
-flow through. `"false"` passes an `if`. `null <= 20` is `true`. Nothing throws;
-the page just shows the wrong products. So every task here is a decision about
-types that you make on purpose, because the language will not make it for you.
-
-## What it needs from the Types and values module
-
-| Task | Lesson it leans on |
+| Part | Lessons |
 |---|---|
 | 1 `typeName` | Where the type actually lives |
-| 2 `readNumber` | Conversion — when a value does not fit; When there is nothing there |
-| 3 `readFlag` | Truthiness; Equality is three questions |
-| 4 `readFilters` | Conversion; When there is nothing there |
-| 5 `combine` | When there is nothing there |
-| 6 `sameFilters` | Equality is three questions |
-| 7 `matches` | Truthiness; Conversion; When there is nothing there |
-| Your answers | The type-discipline axis; Where the type actually lives |
+| 2 `readNumber` | Conversion — when a value does not fit; Working with strings |
+| 3 `weightOf` | Conversion — when a value does not fit; Truthiness |
+| 4 `isCorrect` | Equality: == versus === |
+| 5 `wasAnswered` | Truthiness; When there is nothing there |
+| 6 `showValue` | When there is nothing there |
+| 7 `formatPrice` | Operators; Working with strings |
+| 8 `addPrices` | Operators; Conversion — when a value does not fit |
+| The review | all of the above |
 
 ## Getting started
 
@@ -48,7 +42,7 @@ types that you make on purpose, because the language will not make it for you.
 
    Every test fails at first. That is the starting point, not a problem.
 
-While you work on one task, run just its file:
+While you work on one task, run just its tests:
 
 ```sh
 node --test test/2-read-number.test.js
@@ -57,202 +51,138 @@ node --test test/2-read-number.test.js
 The same tests run on GitHub every time you push. The **Actions** tab shows
 the result.
 
-## The files
+## How to write each answer
 
-- `src/read.js` — tasks 1 to 4: reading raw values.
-- `src/filters.js` — tasks 5 to 7: using the filters.
-- `test/` — one file per task. Read them. Each test's name is one sentence of
-  the spec, and each failure message says what came back and where to look.
-- `review/checkout.js` — the code you review.
-- `REVIEW.md` — where you write the review.
-
-Each function in `src/` starts as `throw new Error('not implemented')`. Replace
-that line with your code. The comment above each function is its contract:
-what it receives and what it must return.
-
-The `export` in front of each function is what lets the tests use it. Modules
-come later in the course; leave it in place.
-
-## Three words this assignment uses
-
-A filter value can be absent in two different ways, and the difference matters
-in task 5.
-
-| Word | Means | The value |
-|---|---|---|
-| **Not mentioned** | The field is not there at all | `undefined` |
-| **Cleared** | The field is there, with nothing in it: `""` or only spaces in the address, `null` in saved JSON. It means "no limit" or "no preference" | `null` |
-| **Rejected** | Something arrived that this field cannot take | a reason, reported |
-
-This is the lesson's own model of JavaScript's two absences: `undefined` is
-nothing ever put there, and `null` is someone saying "none".
-
-## The readers' answers
-
-The readers in tasks 2 and 3 return one of two shapes. Two helpers at the top
-of `src/read.js` build them for you:
+All eight functions are in `src/values.js`, already written except for the
+middle. Each one looks like this:
 
 ```js
-accept(5)                         // { ok: true, value: 5 }
-accept(null)                      // { ok: true, value: null }
-reject('"abc" is not a number')   // { ok: false, reason: '"abc" is not a number' }
-```
-
-## Tasks
-
-### 1. Name the type that arrived — `typeName(value)`
-
-A rejection message should say what arrived: "expected a number, got boolean".
-Write `typeName`, which returns what `typeof` returns with two corrections:
-`null` is `"null"` and an array is `"array"`.
-
-### 2. Read a price — `readNumber(raw)`
-
-| `raw` | Answer |
-|---|---|
-| `undefined` | `accept(undefined)` — not mentioned |
-| `null`, `""`, `"   "` | `accept(null)` — cleared |
-| a number, such as `20` or `0` | `accept` it |
-| text that is a number, such as `"12"`, `" 7.5 "` or `"0"` | `accept` the number |
-| other text, such as `"abc"` or `"12abc"` | `reject`, quoting the text |
-| `NaN` | `reject` |
-| anything else, such as `true` or `["5"]` | `reject`, naming its type with `typeName` |
-
-Convert on purpose, with the explicit conversion from the lesson. Then check
-what the conversion gave you. `text.trim()` returns the text without spaces at
-either end.
-
-### 3. Read a yes or no — `readFlag(raw)`
-
-| `raw` | Answer |
-|---|---|
-| `undefined` | `accept(undefined)` |
-| `null`, `""`, `"   "` | `accept(null)` |
-| `true` or `false` | `accept` it |
-| `"true"` or `"1"` | `accept(true)` |
-| `"false"` or `"0"` | `accept(false)` |
-| any other text | `reject`, quoting it |
-| anything else, such as `1` or `["true", "false"]` | `reject`, naming its type |
-
-Spaces around the text are ignored. `"false"` is a non-empty string; decide
-what that means before you write the `if`.
-
-### 4. Read all three — `readFilters(params)`
-
-`params` is an object, from the address or from saved JSON. Read `minPrice`
-and `maxPrice` with `readNumber` and `inStock` with `readFlag`, and return:
-
-```js
-{
-  filters:  { minPrice: 5, maxPrice: null, inStock: false },
-  rejected: [ { field: "minPrice", value: "abc", reason: '"abc" is not a number' } ]
+export function double(n) {
+  // TODO: put your code here
 }
 ```
 
-- `filters` always has all three keys. A field that was not mentioned, or was
-  rejected, is `undefined`.
-- `rejected` has one entry per rejected field. `value` is exactly what arrived.
-- Anything else in `params`, such as `page`, is ignored.
-- One rule across fields: when `minPrice` and `maxPrice` are both numbers and
-  the maximum is below the minimum, reject `maxPrice` with the reason
-  `"below minPrice"` and leave it `undefined`.
-
-### 5. Combine with saved preferences — `combine(saved, fromUrl)`
-
-`fromUrl` is the `filters` from task 4. `saved` is the shopper's saved JSON. It
-may lack a field, if it was saved by an older version of the page. It may be
-`null`, if the shopper never saved anything.
-
-For each field, use the address's value if the address mentioned it — `null`
-included, because a cleared box is a choice. Otherwise use the saved value.
-Otherwise `null`. The result is a complete set of filters: no field is ever
-`undefined`.
-
-### 6. Did anything change? — `sameFilters(a, b)`
-
-The page offers "Save as my defaults" only when the filters in use differ from
-the saved ones. Return `true` when two complete sets of filters hold the same
-values. They are almost always two separate objects.
-
-### 7. Pick the products — `matches(product, filters)`
-
-A product is `{ name, price, stock }`. `price` is `null` when the price is
-given on request. `stock` is missing when the shop does not know it. Return
-whether the product passes the filters:
-
-- A limit of `null` is no limit. Any number is a limit, `0` included.
-- Limits include their edge: a minimum of 12 lets a price of 12 through.
-- A product with no price never passes a price limit.
-- In stock means a stock above 0. Missing stock is not in stock.
-- `inStock: true` keeps only products in stock. `inStock: false` keeps only
-  products that are not. `null` keeps both.
-
-### 8. Decide how forgiving `readNumber` should be
-
-`Number()` accepts more than a shopper means, and less than a shopper types:
+Write your answer between the braces, and put `return` in front of it —
+`return` sends the value out of the function so the tests can check it. The
+Functions module explains the rest.
 
 ```js
-Number("1e3")       // 1000
-Number("0x1A")      // 26
-Number("Infinity")  // Infinity
-Number("$12")       // NaN
-Number("1,200")     // NaN
+export function double(n) {
+  return n * 2;
+}
 ```
 
-Decide what `readNumber` should do with each of these five. Change your code if
-your decision needs it — the tests do not check these five inputs, so any
-defended choice passes. Write your decision and your reasons in the answer
-section below: which you accept, which you reject, and what each choice costs
-a shopper.
+The name in the parentheses — `n` here — is the value the test hands in. Use
+that name in your answer. You can also make your own names with `const` inside
+the braces, as you would anywhere else.
+
+Some tasks need a different answer for some values. For those, use `if`. When
+a `return` runs, the function stops there, so a `return` inside an `if` answers
+for that case, and the lines after the `if` handle everything else:
+
+```js
+export function sign(n) {
+  if (n < 0) {
+    return "negative";
+  }
+  return "not negative";
+}
+```
+
+The *Control flow* module teaches `if` properly. This much is all you need
+here.
+
+Leave `export` in front of each function. It is what lets the tests use it.
+
+Stuck? `console.log(something)` inside a function prints it when the tests
+run. The tests do not look at what you print, so print as much as you like.
+
+## The tasks
+
+The comment above each function in `src/values.js` says what it receives and
+what it sends back, with examples. The tests say the rest: each failure message
+says what came back and what to look at.
+
+### 1. Name the type — `typeName(value)`
+
+Send back what `typeof` says, except that `null` gives `"null"`. (`typeof null`
+says `"object"`, which is a mistake in the language.)
+
+### 2. Text to a number — `readNumber(text)`
+
+`"12"` gives `12`. Empty text, or only spaces, gives `null`: the person typed
+nothing, and nothing is not zero. `Number()` alone gets this wrong — try
+`Number("")` and see. `text.trim()` gives the text without spaces at either
+end.
+
+### 3. The number at the start — `weightOf(label)`
+
+`"2.5 kg"` gives `2.5`. `Number()` wants the whole text to be a number;
+`parseFloat()` reads a number from the start and stops at the first thing that
+is not part of one. A label with no number at the start gives `null`. To find
+out whether you got `NaN`, use `Number.isNaN(x)` — `x === NaN` is always
+`false`.
+
+### 4. Mark an answer — `isCorrect(answer, expected)`
+
+`answer` is text a student typed; `expected` is a number. Convert, then
+compare with `===`. A blank answer is never correct, even when the right answer
+is `0`.
+
+### 5. Was it answered? — `wasAnswered(value)`
+
+`undefined`, `null` and `""` mean no answer. Everything else is an answer —
+including `0` and `false`, which `if (value)` would throw away.
+
+### 6. Show a value — `showValue(value)`
+
+`undefined` gives `"(not set)"`; `null` gives `"(none)"`; anything else gives
+`String(value)`.
+
+### 7. Cents to dollars — `formatPrice(cents)`
+
+`1205` gives `"$12.05"`, and `1250` gives `"$12.50"`, not `"$12.5"`.
+`number.toFixed(2)` gives text with exactly two digits after the dot.
+
+### 8. Add two typed prices — `addPrices(firstText, secondText)`
+
+`"5"` and `"2"` give `7`, not `"52"`. A blank or a price that is not a number
+gives `null`. You can call your `readNumber` from task 2.
 
 ## The review
 
-`review/checkout.js` is a teammate's first draft of a checkout summary. It runs
-without an error. It still has more than one defect, most of them the kind this
-module is about.
+`review/split-bill.js` is a teammate's first try at splitting a restaurant
+bill. It runs without an error, and it has three problems of the kind this
+module is about. Run it:
 
-Find them. For each one, write in `REVIEW.md`:
+```sh
+node review/split-bill.js
+```
 
-- the line or lines;
-- what goes wrong, and why — name the rule the language followed;
-- an input that shows it: the call, what it returns, and what it should return;
-- the fix.
+Change the three values at the top and run it again — try a blank, try `"0"`.
 
-You can try the file's functions in a scratch file, or paste them into Node.
-The tests do not check `REVIEW.md`. A person reads it, so write for the
-teammate who will act on it.
+For each problem, write in `REVIEW.md`: the line, what goes wrong and why, the
+values that show it, and a fix. A person reads it, not the tests.
 
 ## Your answers
 
-Replace each prompt with your answer. One to three sentences each.
+Replace each prompt with one to three sentences.
 
-1. **When would you have found out?** Suppose `readFilters` did not exist and a
-   `minPrice` of `"abc"` went straight into `matches`. What would `matches` do,
-   and when — if ever — would anything report a problem?
-
-   *Your answer:*
-
-2. **Two axes.** In Python, `float("")` raises an error and `"5" - 1` raises a
-   `TypeError`. In JavaScript, `Number("")` is `0` and `"5" - 1` is `4`. Place
-   the two languages on the two axes from *The type-discipline axis*. Which
-   axis is the reason `readNumber` needs a blank check that a Python version
-   would get from the language?
+1. **Nothing is not zero.** Your `readNumber("")` gives `null`, but
+   `Number("")` gives `0`. Describe one thing that would go wrong in a real
+   program if a blank box were read as `0`.
 
    *Your answer:*
 
-3. **Which question?** Why can `sameFilters` not be `return a === b;`? Name the
-   question `===` asks about two objects, and the one you needed.
-
-   *Your answer:*
-
-4. **Task 8.** What does your `readNumber` do with `"1e3"`, `"0x1A"`,
-   `"Infinity"`, `"$12"` and `"1,200"`, and why?
+2. **Which equals?** Give one pair of values where `answer == expected` and
+   `answer === expected` give different results in task 4, and say which one a
+   quiz should trust.
 
    *Your answer:*
 
 ## Done means
 
 - `npm test` passes every test.
-- `REVIEW.md` has a finding for each defect you found, each with lines, what
-  goes wrong, an input, and a fix.
-- The four answers above are filled in.
+- `REVIEW.md` has the three problems, each with a line, what goes wrong,
+  values that show it, and a fix.
+- The two answers above are filled in.
