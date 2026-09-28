@@ -1,0 +1,12 @@
+{
+  "name": "cs140-types",
+  "private": true,
+  "type": "module",
+  "description": "Search filters from a query string: convert on purpose, compare correctly, tell missing from zero from cleared.",
+  "scripts": {
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
