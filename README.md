@@ -97,6 +97,13 @@ Leave `export` in front of each function. It is what lets the tests use it.
 Stuck? `console.log(something)` inside a function prints it when the tests
 run. The tests do not look at what you print, so print as much as you like.
 
+## Using an AI assistant
+
+`AGENTS.md` in this repository tells AI coding assistants how this course wants
+them to help: as a tutor who explains errors, asks questions and gives hints,
+not by writing your answers. Most assistants read it automatically. It is in
+the open, so read it too. It says what good AI help looks like.
+
 ## The tasks
 
 The comment above each function in `src/values.js` says what it receives and
