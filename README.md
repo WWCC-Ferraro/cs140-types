@@ -26,15 +26,14 @@ and that is fine.
 
 ## Getting started
 
-1. Make your own copy. On this repository's GitHub page, choose **Use this
-   template**, then **Create a new repository**.
-2. Open your copy in one of two ways. Both work the same.
-   - **In a Codespace.** Choose **Code**, then **Codespaces**, then **Create
-     codespace on main**. Node is already installed.
-   - **On your own machine.** Clone it and open the folder. Check that
-     `node --version` prints 22 or later — Start Here's *Set up where your code
-     runs* covers this.
-3. Run the tests:
+1. Open **your repository**. It is made for you: private, and named for this
+   homework, the term and your username — `<term>-cs140-types-<you>`. On
+   [this homework's page](https://wwcc.dev/#/lesson/types-assignment), type your GitHub
+   username and click **Open my Codespace**. On your own computer, clone it
+   with GitHub Desktop (**Code**, then **Open with GitHub Desktop**) and check
+   that `node --version` prints 22 or later. Start Here's *How a homework works*
+   walks through both.
+2. Run the tests:
 
    ```sh
    npm test
