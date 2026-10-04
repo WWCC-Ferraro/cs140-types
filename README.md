@@ -1,28 +1,25 @@
 # Values, one at a time
 
-Eight small functions, each about one thing JavaScript does with a value: what
-type it is, how to turn text into a number on purpose, which comparison to use,
-and how to tell "nothing" apart from zero. Then a short review of a teammate's
-script, and two short written answers.
+Eight small functions, each about one thing JavaScript does with a value:
+what type it is, what arithmetic and comparisons give back, checking text, and
+telling "nothing" apart from zero and false.
 
 Everything here uses numbers, strings, booleans, `null` and `undefined` — the
-values from the *Values, types and operators* module. Plan on about an hour and
-a half. If this is your first time programming, it may take a little longer,
-and that is fine.
+values from the *Values, types and operators* module. Every answer is one line:
+a `return` and one expression. None of them needs `if`.
 
 ## What each part leans on
 
 | Part | Lessons |
 |---|---|
 | 1 `typeName` | Where the type actually lives |
-| 2 `readNumber` | Conversion — when a value does not fit; Working with strings |
-| 3 `weightOf` | Conversion — when a value does not fit; Truthiness |
-| 4 `isCorrect` | Equality: == versus === |
-| 5 `wasAnswered` | Truthiness; When there is nothing there |
-| 6 `showValue` | When there is nothing there |
-| 7 `formatPrice` | Operators; Working with strings |
-| 8 `addPrices` | Operators; Conversion — when a value does not fit |
-| The review | all of the above |
+| 2 `isWholeNumber` | Arithmetic operators; Comparing and combining |
+| 3 `isInRange` | Comparing and combining |
+| 4 `isValidCode` | Working with strings; Comparing and combining |
+| 5 `isCorrect` | Conversion — when a value does not fit; Equality: == versus === |
+| 6 `wasAnswered` | When there is nothing there; Truthiness |
+| 7 `labelOf` | When there is nothing there; Conversion — when a value does not fit |
+| 8 `formatPrice` | Arithmetic operators; Working with strings |
 
 ## Getting started
 
@@ -44,7 +41,7 @@ and that is fine.
 While you work on one task, run just its tests:
 
 ```sh
-node --test test/2-read-number.test.js
+node --test test/2-whole-number.test.js
 ```
 
 The same tests run on GitHub every time you push. The **Actions** tab shows
@@ -75,21 +72,9 @@ The name in the parentheses — `n` here — is the value the test hands in. Use
 that name in your answer. You can also make your own names with `const` inside
 the braces, as you would anywhere else.
 
-Some tasks need a different answer for some values. For those, use `if`. When
-a `return` runs, the function stops there, so a `return` inside an `if` answers
-for that case, and the lines after the `if` handle everything else:
-
-```js
-export function sign(n) {
-  if (n < 0) {
-    return "negative";
-  }
-  return "not negative";
-}
-```
-
-The *Control flow* module teaches `if` properly. This much is all you need
-here.
+Several tasks send back `true` or `false`. A comparison already gives one —
+`n > 3` *is* `true` or `false` — so send it back directly: `return n > 3;`.
+Join two questions with `&&` (both must be true) or `||` (either will do).
 
 Leave `export` in front of each function. It is what lets the tests use it.
 
@@ -111,84 +96,46 @@ says what came back and what to look at.
 
 ### 1. Name the type — `typeName(value)`
 
-Send back what `typeof` says, except that `null` gives `"null"`. (`typeof null`
-says `"object"`, which is a mistake in the language.)
+Send back what `typeof` says. That includes `null`, which `typeof` calls
+`"object"` — a mistake in the language that was never fixed. Leave it.
 
-### 2. Text to a number — `readNumber(text)`
+### 2. Is it whole? — `isWholeNumber(n)`
 
-`"12"` gives `12`. Empty text, or only spaces, gives `null`: the person typed
-nothing, and nothing is not zero. `Number()` alone gets this wrong — try
-`Number("")` and see. `text.trim()` gives the text without spaces at either
-end.
+`4` is whole; `4.5` is not. The remainder operator `%` gives what is left
+over after dividing: a whole number divided by 1 leaves nothing over.
 
-### 3. The number at the start — `weightOf(label)`
+### 3. In range? — `isInRange(n, low, high)`
 
-`"2.5 kg"` gives `2.5`. `Number()` wants the whole text to be a number;
-`parseFloat()` reads a number from the start and stops at the first thing that
-is not part of one. A label with no number at the start gives `null`. To find
-out whether you got `NaN`, use `Number.isNaN(x)` — `x === NaN` is always
-`false`.
+`true` when `n` is at least `low` **and** at most `high`. Both ends count.
 
-### 4. Mark an answer — `isCorrect(answer, expected)`
+### 4. A ticket code — `isValidCode(code)`
+
+Exactly 6 characters, starting with `"WW"`, with no lowercase letters. Three
+checks, joined with `&&`. A string with no lowercase letters is unchanged by
+`toUpperCase()`.
+
+### 5. Mark an answer — `isCorrect(answer, expected)`
 
 `answer` is text a student typed; `expected` is a number. Convert, then
 compare with `===`. A blank answer is never correct, even when the right answer
-is `0`.
+is `0` — and `Number("")` is `0`, so check for a blank first.
 
-### 5. Was it answered? — `wasAnswered(value)`
+### 6. Was it answered? — `wasAnswered(value)`
 
 `undefined`, `null` and `""` mean no answer. Everything else is an answer —
-including `0` and `false`, which `if (value)` would throw away.
+including `0` and `false`, which truthiness would throw away.
 
-### 6. Show a value — `showValue(value)`
+### 7. Show a setting — `labelOf(value)`
 
-`undefined` gives `"(not set)"`; `null` gives `"(none)"`; anything else gives
-`String(value)`.
+Any value as text — `0` gives `"0"`, `false` gives `"false"` — except that
+`null` and `undefined` give `"(none)"`. `??` replaces only `null` and
+`undefined`; `||` would replace `0` and `false` too.
 
-### 7. Cents to dollars — `formatPrice(cents)`
+### 8. Cents to dollars — `formatPrice(cents)`
 
 `1205` gives `"$12.05"`, and `1250` gives `"$12.50"`, not `"$12.5"`.
 `number.toFixed(2)` gives text with exactly two digits after the dot.
 
-### 8. Add two typed prices — `addPrices(firstText, secondText)`
-
-`"5"` and `"2"` give `7`, not `"52"`. A blank or a price that is not a number
-gives `null`. You can call your `readNumber` from task 2.
-
-## The review
-
-`review/split-bill.js` is a teammate's first try at splitting a restaurant
-bill. It runs without an error, and it has three problems of the kind this
-module is about. Run it:
-
-```sh
-node review/split-bill.js
-```
-
-Change the three values at the top and run it again — try a blank, try `"0"`.
-
-For each problem, write in `REVIEW.md`: the line, what goes wrong and why, the
-values that show it, and a fix. A person reads it, not the tests.
-
-## Your answers
-
-Replace each prompt with one to three sentences.
-
-1. **Nothing is not zero.** Your `readNumber("")` gives `null`, but
-   `Number("")` gives `0`. Describe one thing that would go wrong in a real
-   program if a blank box were read as `0`.
-
-   *Your answer:*
-
-2. **Which equals?** Give one pair of values where `answer == expected` and
-   `answer === expected` give different results in task 4, and say which one a
-   quiz should trust.
-
-   *Your answer:*
-
 ## Done means
 
-- `npm test` passes every test.
-- `REVIEW.md` has the three problems, each with a line, what goes wrong,
-  values that show it, and a fix.
-- The two answers above are filled in.
+`npm test` passes every test.

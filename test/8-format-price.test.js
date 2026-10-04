@@ -1,4 +1,4 @@
-// Task 7 — formatPrice(cents)
+// Task 8 — formatPrice(cents)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { inspect } from 'node:util';

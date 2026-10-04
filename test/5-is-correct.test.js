@@ -1,4 +1,4 @@
-// Task 4 — isCorrect(answer, expected)
+// Task 5 — isCorrect(answer, expected)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { inspect } from 'node:util';

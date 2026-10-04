@@ -1,5 +1,4 @@
-// Eight small functions. Each one is about one thing the language does with
-// values.
+// Eight small functions, each about one thing the language does with a value.
 //
 // For each function:
 //   - read the comment above it — it says what the function receives and
@@ -7,9 +6,11 @@
 //   - write your answer between the braces, where it says TODO;
 //   - put `return` in front of the value you want to send back.
 //
-// `return` sends a value out of the function so the tests can check it. When
-// a `return` runs, the function stops there. The Functions module explains the
-// rest.
+// Every answer is a single line: one `return` and one expression. None of
+// them needs anything the Values, types and operators module has not taught.
+//
+// `return` sends a value out of the function so the tests can check it. The
+// Functions module explains the rest.
 //
 // The names in the parentheses, such as `value` or `text`, are the values the
 // tests hand in. Use those names in your answer.
@@ -19,50 +20,63 @@
 /**
  * Task 1. Name the type of a value.
  *
- * Send back what `typeof` says, with one correction: for `null`, send back
- * "null". (`typeof null` says "object", which is a mistake in the language.)
+ * Send back what `typeof` says about `value`.
  *
  *   typeName("hi")   -> "string"
  *   typeName(5)      -> "number"
- *   typeName(null)   -> "null"
+ *   typeName("5")    -> "string"
+ *   typeName(null)   -> "object"   (a famous mistake in the language; leave it)
  */
 export function typeName(value) {
   // TODO: put your code here
 }
 
 /**
- * Task 2. Turn text a person typed into a number.
+ * Task 2. Is a number whole?
  *
- * `text` is always a string. If it is empty, or only spaces, send back null:
- * the person typed nothing, and nothing is not zero. Otherwise send back the
- * number it holds. Text that is not a number gives NaN, and that is fine here.
+ * `n` is a number. Send back true if it has no fraction part, false if it has.
  *
- *   readNumber("12")     -> 12
- *   readNumber(" 7.5 ")  -> 7.5
- *   readNumber("")       -> null
- *   readNumber("abc")    -> NaN
+ *   isWholeNumber(4)     -> true
+ *   isWholeNumber(4.5)   -> false
+ *   isWholeNumber(-3)    -> true
  */
-export function readNumber(text) {
+export function isWholeNumber(n) {
   // TODO: put your code here
 }
 
 /**
- * Task 3. Read the weight from a label such as "2.5 kg".
+ * Task 3. Is a number inside a range?
  *
- * `label` is a string that starts with a number and may have a unit after it.
- * Send back the number. If the label does not start with a number, send back
- * null.
+ * Send back true if `n` is at least `low` and at most `high` — both ends count —
+ * and false otherwise.
  *
- *   weightOf("2.5 kg")  -> 2.5
- *   weightOf("10kg")    -> 10
- *   weightOf("kg")      -> null
+ *   isInRange(5, 1, 10)    -> true
+ *   isInRange(1, 1, 10)    -> true
+ *   isInRange(11, 1, 10)   -> false
  */
-export function weightOf(label) {
+export function isInRange(n, low, high) {
   // TODO: put your code here
 }
 
 /**
- * Task 4. Mark an answer to a maths question.
+ * Task 4. Check a ticket code.
+ *
+ * `code` is a string. A valid code is exactly 6 characters long, starts with
+ * "WW", and has no lowercase letters. Send back true if `code` is valid, false
+ * if not.
+ *
+ *   isValidCode("WW1234")   -> true
+ *   isValidCode("WWAB12")   -> true
+ *   isValidCode("WWab12")   -> false
+ *   isValidCode("XX1234")   -> false
+ *   isValidCode("WW123")    -> false
+ */
+export function isValidCode(code) {
+  // TODO: put your code here
+}
+
+/**
+ * Task 5. Mark an answer to a maths question.
  *
  * `answer` is the text a student typed. `expected` is the right answer, a
  * number. Send back true if the answer is that number, and false if not. A
@@ -78,7 +92,7 @@ export function isCorrect(answer, expected) {
 }
 
 /**
- * Task 5. Did the person answer this survey question?
+ * Task 6. Did the person answer this survey question?
  *
  * `value` is what the survey stored: a number, a boolean, a string, null or
  * undefined. Send back false for undefined, null and "" — those mean no
@@ -94,22 +108,22 @@ export function wasAnswered(value) {
 }
 
 /**
- * Task 6. Show a setting's value as text.
+ * Task 7. Show a setting as text.
  *
- * Send back "(not set)" for undefined, "(none)" for null, and the value
- * turned into a string for anything else.
+ * Send back `value` turned into a string. If there is no value — null or
+ * undefined — send back "(none)" instead.
  *
- *   showValue(undefined)  -> "(not set)"
- *   showValue(null)       -> "(none)"
- *   showValue(0)          -> "0"
- *   showValue(false)      -> "false"
+ *   labelOf("dark")     -> "dark"
+ *   labelOf(0)          -> "0"
+ *   labelOf(false)      -> "false"
+ *   labelOf(null)       -> "(none)"
  */
-export function showValue(value) {
+export function labelOf(value) {
   // TODO: put your code here
 }
 
 /**
- * Task 7. Write a price in cents as dollars.
+ * Task 8. Write a price in cents as dollars.
  *
  * `cents` is a whole number. Send back a string: a dollar sign, the dollars,
  * a dot, and always two digits of cents.
@@ -119,20 +133,5 @@ export function showValue(value) {
  *   formatPrice(5)     -> "$0.05"
  */
 export function formatPrice(cents) {
-  // TODO: put your code here
-}
-
-/**
- * Task 8. Add two prices typed as text.
- *
- * `firstText` and `secondText` are strings a person typed. Send back their
- * sum as a number. If either one is blank or is not a number, send back null.
- * You may call your readNumber from task 2.
- *
- *   addPrices("2.50", "1.25")  -> 3.75
- *   addPrices("5", "2")        -> 7
- *   addPrices("", "3")         -> null
- */
-export function addPrices(firstText, secondText) {
   // TODO: put your code here
 }

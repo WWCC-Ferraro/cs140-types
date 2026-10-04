@@ -1,4 +1,4 @@
-// Task 5 — wasAnswered(value)
+// Task 6 — wasAnswered(value)
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { inspect } from 'node:util';
@@ -27,7 +27,7 @@ test('ordinary answers are answers', () => {
 
 test('0 is an answer', () => {
   check(0, true,
-    '"How many pets do you have?" — 0 is an answer. 0 is falsy, so if (value) treats it as no answer. ' +
+    '"How many pets do you have?" — 0 is an answer. 0 is falsy, so Boolean(value) says no. ' +
     'See "Truthiness": ask about the three values that mean no answer, not about truthiness.');
 });
 
