@@ -9,7 +9,7 @@ const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tel
 function check(n, low, high, want, hint) {
   const got = isInRange(n, low, high);
   assert.equal(got, want,
-    `isInRange(${show(n) + ", " + show(low) + ", " + show(high)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `isInRange(${show(n) + ", " + show(low) + ", " + show(high)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('a number between the ends is in range', () => {

@@ -9,7 +9,7 @@ const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tel
 function check(value, want, hint) {
   const got = labelOf(value);
   assert.equal(got, want,
-    `labelOf(${show(value)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `labelOf(${show(value)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('a value becomes text', () => {
@@ -31,7 +31,7 @@ test('null and undefined become "(none)"', () => {
   check(undefined, '(none)', hint);
 });
 
-test('sends back a string', () => {
+test('returns a string', () => {
   const got = labelOf(5);
-  assert.equal(typeof got, 'string', `labelOf(5) should be a string, but it gave ${show(got)}. Turn the result into text with String().`);
+  assert.equal(typeof got, 'string', `labelOf(5) should be a string, but it returned ${show(got)}. Turn the result into text with String().`);
 });

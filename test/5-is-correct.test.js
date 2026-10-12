@@ -9,7 +9,7 @@ const show = (v) => inspect(v);
 function check(answer, expected, want, hint) {
   const got = isCorrect(answer, expected);
   assert.equal(got, want,
-    `isCorrect(${show(answer)}, ${show(expected)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `isCorrect(${show(answer)}, ${show(expected)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('the right number, typed as text, is correct', () => {

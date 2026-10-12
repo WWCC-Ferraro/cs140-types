@@ -2,7 +2,7 @@
 //
 // For each function:
 //   - read the comment above it — it says what the function receives and
-//     what it must send back;
+//     what it must return;
 //   - write your answer between the braces, where it says TODO;
 //   - put `return` in front of the value you want to send back.
 //
@@ -20,7 +20,7 @@
 /**
  * Task 1. Name the type of a value.
  *
- * Send back what `typeof` says about `value`.
+ * Return what `typeof` says about `value`.
  *
  *   typeName("hi")   -> "string"
  *   typeName(5)      -> "number"
@@ -34,7 +34,7 @@ export function typeName(value) {
 /**
  * Task 2. Is a number whole?
  *
- * `n` is a number. Send back true if it has no fraction part, false if it has.
+ * `n` is a number. Return true if it has no fraction part, false if it has.
  *
  *   isWholeNumber(4)     -> true
  *   isWholeNumber(4.5)   -> false
@@ -47,7 +47,7 @@ export function isWholeNumber(n) {
 /**
  * Task 3. Is a number inside a range?
  *
- * Send back true if `n` is at least `low` and at most `high` — both ends count —
+ * Return true if `n` is at least `low` and at most `high` — both ends count —
  * and false otherwise.
  *
  *   isInRange(5, 1, 10)    -> true
@@ -62,7 +62,7 @@ export function isInRange(n, low, high) {
  * Task 4. Check a ticket code.
  *
  * `code` is a string. A valid code is exactly 6 characters long, starts with
- * "WW", and has no lowercase letters. Send back true if `code` is valid, false
+ * "WW", and has no lowercase letters. Return true if `code` is valid, false
  * if not.
  *
  *   isValidCode("WW1234")   -> true
@@ -79,7 +79,7 @@ export function isValidCode(code) {
  * Task 5. Mark an answer to a maths question.
  *
  * `answer` is the text a student typed. `expected` is the right answer, a
- * number. Send back true if the answer is that number, and false if not. A
+ * number. Return true if the answer is that number, and false if not. A
  * blank answer is never right — not even when the right answer is 0.
  *
  *   isCorrect("7", 7)    -> true
@@ -95,8 +95,8 @@ export function isCorrect(answer, expected) {
  * Task 6. Did the person answer this survey question?
  *
  * `value` is what the survey stored: a number, a boolean, a string, null or
- * undefined. Send back false for undefined, null and "" — those mean no
- * answer. Send back true for everything else. 0 and false are answers.
+ * undefined. Return false for undefined, null and "" — those mean no
+ * answer. Return true for everything else. 0 and false are answers.
  *
  *   wasAnswered(3)          -> true
  *   wasAnswered(0)          -> true
@@ -110,8 +110,8 @@ export function wasAnswered(value) {
 /**
  * Task 7. Show a setting as text.
  *
- * Send back `value` turned into a string. If there is no value — null or
- * undefined — send back "(none)" instead.
+ * Return `value` turned into a string. If there is no value — null or
+ * undefined — return "(none)" instead.
  *
  *   labelOf("dark")     -> "dark"
  *   labelOf(0)          -> "0"
@@ -125,7 +125,7 @@ export function labelOf(value) {
 /**
  * Task 8. Write a price in cents as dollars.
  *
- * `cents` is a whole number. Send back a string: a dollar sign, the dollars,
+ * `cents` is a whole number. Return a string: a dollar sign, the dollars,
  * a dot, and always two digits of cents.
  *
  *   formatPrice(1205)  -> "$12.05"

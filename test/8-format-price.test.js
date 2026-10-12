@@ -9,7 +9,7 @@ const show = (v) => inspect(v);
 function check(cents, want, hint) {
   const got = formatPrice(cents);
   assert.equal(got, want,
-    `formatPrice(${show(cents)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `formatPrice(${show(cents)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('writes dollars and cents with a dollar sign', () => {
@@ -31,7 +31,7 @@ test('small and zero amounts', () => {
   check(0, '$0.00', hint);
 });
 
-test('sends back a string', () => {
+test('returns a string', () => {
   const got = formatPrice(100);
-  assert.equal(typeof got, 'string', `formatPrice(100) should be a string, but it gave ${show(got)}.`);
+  assert.equal(typeof got, 'string', `formatPrice(100) should be a string, but it returned ${show(got)}.`);
 });

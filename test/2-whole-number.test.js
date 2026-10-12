@@ -9,7 +9,7 @@ const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tel
 function check(n, want, hint) {
   const got = isWholeNumber(n);
   assert.equal(got, want,
-    `isWholeNumber(${show(n)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `isWholeNumber(${show(n)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('whole numbers are whole', () => {

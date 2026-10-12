@@ -9,7 +9,7 @@ const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tel
 function check(code, want, hint) {
   const got = isValidCode(code);
   assert.equal(got, want,
-    `isValidCode(${show(code)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `isValidCode(${show(code)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('a code with all three rules met is valid', () => {

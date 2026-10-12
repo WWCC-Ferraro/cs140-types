@@ -9,7 +9,7 @@ const show = (v) => inspect(v);
 function check(value, want, hint) {
   const got = wasAnswered(value);
   assert.equal(got, want,
-    `wasAnswered(${show(value)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `wasAnswered(${show(value)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('undefined, null and "" are not answers', () => {

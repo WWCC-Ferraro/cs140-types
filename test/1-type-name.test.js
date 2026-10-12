@@ -9,7 +9,7 @@ const show = (v) => inspect(v);   // shows "5" and 5 differently, so you can tel
 function check(value, want, hint) {
   const got = typeName(value);
   assert.equal(got, want,
-    `typeName(${show(value)}) should be ${show(want)}, but it gave ${show(got)}. ${hint}`);
+    `typeName(${show(value)}) should be ${show(want)}, but it returned ${show(got)}. ${hint}`);
 }
 
 test('names strings, numbers, booleans and undefined', () => {
@@ -25,9 +25,9 @@ test('"5" is a string, even though it looks like a number', () => {
 });
 
 test('NaN is a number', () => {
-  check(NaN, 'number', 'NaN means "not a number", but its type is number. Send back what typeof says.');
+  check(NaN, 'number', 'NaN means "not a number", but its type is number. Return what typeof says.');
 });
 
 test('null is "object" — the language\'s famous mistake, left as it is', () => {
-  check(null, 'object', 'typeof null says "object". It is a mistake in the language that was never fixed; send it back unchanged.');
+  check(null, 'object', 'typeof null says "object". It is a mistake in the language that was never fixed; return it unchanged.');
 });

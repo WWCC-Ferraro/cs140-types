@@ -1,7 +1,7 @@
 # Values, one at a time
 
 Eight small functions, each about one thing JavaScript does with a value:
-what type it is, what arithmetic and comparisons give back, checking text, and
+what type it is, what arithmetic and comparisons evaluate to, checking text, and
 telling "nothing" apart from zero and false.
 
 Everything here uses numbers, strings, booleans, `null` and `undefined` — the
@@ -49,8 +49,8 @@ the result.
 
 ## How to write each answer
 
-All eight functions are in `src/values.js`, already written except for the
-middle. Each one looks like this:
+All eight functions are in `src/values.js`, already written except for their
+bodies, the part between the braces. Each one looks like this:
 
 ```js
 export function double(n) {
@@ -60,7 +60,8 @@ export function double(n) {
 
 Write your answer between the braces, and put `return` in front of it —
 `return` sends the value out of the function so the tests can check it. The
-Functions module explains the rest.
+Functions module, later in the course, explains functions and `return` in
+full.
 
 ```js
 export function double(n) {
@@ -72,8 +73,8 @@ The name in the parentheses — `n` here — is the value the test hands in. Use
 that name in your answer. You can also make your own names with `const` inside
 the braces, as you would anywhere else.
 
-Several tasks send back `true` or `false`. A comparison already gives one —
-`n > 3` *is* `true` or `false` — so send it back directly: `return n > 3;`.
+Several tasks return `true` or `false`. A comparison already gives one —
+`n > 3` *is* `true` or `false` — so return it directly: `return n > 3;`.
 Join two questions with `&&` (both must be true) or `||` (either will do).
 
 Leave `export` in front of each function. It is what lets the tests use it.
@@ -96,13 +97,14 @@ a failing test or an idea.
 ## The tasks
 
 The comment above each function in `src/values.js` says what it receives and
-what it sends back, with examples. The tests say the rest: each failure message
+what it returns, with examples. The tests say the rest: each failure message
 says what came back and what to look at.
 
 ### 1. Name the type — `typeName(value)`
 
-Send back what `typeof` says. That includes `null`, which `typeof` calls
-`"object"` — a mistake in the language that was never fixed. Leave it.
+Return what `typeof` says. That includes `null`, which `typeof` calls
+`"object"` — a mistake in the language that was never fixed. Return
+`"object"` for `null` too, just as `typeof` does.
 
 ### 2. Is it whole? — `isWholeNumber(n)`
 
@@ -121,14 +123,15 @@ checks, joined with `&&`. A string with no lowercase letters is unchanged by
 
 ### 5. Mark an answer — `isCorrect(answer, expected)`
 
-`answer` is text a student typed; `expected` is a number. Convert, then
-compare with `===`. A blank answer is never correct, even when the right answer
+`answer` is text a student typed; `expected` is a number. Convert `answer` to
+a number, then compare it with `expected` using `===`. A blank answer is never correct, even when the right answer
 is `0` — and `Number("")` is `0`, so check for a blank first.
 
 ### 6. Was it answered? — `wasAnswered(value)`
 
 `undefined`, `null` and `""` mean no answer. Everything else is an answer —
-including `0` and `false`, which truthiness would throw away.
+including `0` and `false`. Both are falsy, so a truthiness test would treat
+them as no answer.
 
 ### 7. Show a setting — `labelOf(value)`
 
