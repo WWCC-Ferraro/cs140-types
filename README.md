@@ -82,18 +82,6 @@ Leave `export` in front of each function. It is what lets the tests use it.
 Stuck? `console.log(something)` inside a function prints it when the tests
 run. The tests do not look at what you print, so print as much as you like.
 
-## Using an AI assistant
-
-`AGENTS.md` in this repository tells AI coding assistants how this course wants
-them to help: as a tutor who explains errors, asks questions and gives hints,
-not by writing your answers. Most assistants read it automatically. It is in
-the open, so read it too. It says what good AI help looks like.
-
-In VS Code, in a Codespace or on your own computer, AI code suggestions are
-switched off for this homework (`.vscode/settings.json`), so the code you hand
-in is your own. Chat is on, and it follows `AGENTS.md`: ask it about an error,
-a failing test or an idea.
-
 ## The tasks
 
 The comment above each function in `src/values.js` says what it receives and
@@ -147,3 +135,15 @@ Any value as text — `0` gives `"0"`, `false` gives `"false"` — except that
 ## Done means
 
 `npm test` passes every test.
+
+## Using an AI assistant
+
+`AGENTS.md` in this repository tells AI coding assistants how this course wants
+them to help: as a tutor who explains errors, asks questions and gives hints,
+not by writing your answers. Most assistants read it automatically. It is in
+the open, so read it too. It says what good AI help looks like.
+
+In VS Code, in a Codespace or on your own computer, AI code suggestions are
+switched off for this homework (`.vscode/settings.json`), so the code you hand
+in is your own. Chat is on, and it follows `AGENTS.md`: ask it about an error,
+a failing test or an idea.
